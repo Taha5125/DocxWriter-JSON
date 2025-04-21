@@ -17,7 +17,7 @@ A powerful Python library for creating professionally formatted Word documents f
 1. Clone the repository:
 
     ```bash
-    git clone https://github.com/yourusername/DocxWriter.git
+    git clone https://github.com/karar-hayder/DocxWriter-JSON.git
     cd DocxWriter
     ```
 

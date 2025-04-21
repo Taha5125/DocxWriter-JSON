@@ -25,7 +25,7 @@ from docxwriter.compat import (
 __version__ = "0.1.0"
 __author__ = "Karar Haider"
 __license__ = "MIT"
-__url__ = "https://github.com/karar-hayder/docxwriter"
+__url__ = "https://github.com/karar-hayder/DocxWriter-JSON.git"
 __description__ = "A Python library for creating Word documents from JSON data"
 __keywords__ = [
     "docx",
