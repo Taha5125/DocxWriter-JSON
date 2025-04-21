@@ -40,8 +40,6 @@ data/
 *.pdf
 *.log
 *.json
-*.txt
-*.md
 *.csv
 *.xlsx
 *.xls
