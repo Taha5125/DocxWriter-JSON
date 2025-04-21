@@ -1,3 +1,5 @@
+"""Tests for the DocxWriter project."""
+
 import os
 import json
 import unittest
@@ -8,9 +10,10 @@ from docx.shared import Pt, RGBColor
 from docx.enum.text import WD_ALIGN_PARAGRAPH
 from docx.enum.style import WD_STYLE_TYPE
 
-# Import the modules to test
+# Import the modules to test - use the compatibility layer for maximum test stability
 import writer
 import styles
+from docxwriter.utils.paths import output_dir
 
 
 class TestDocxWriter(unittest.TestCase):
@@ -42,21 +45,18 @@ class TestDocxWriter(unittest.TestCase):
             json.dump(self.sample_data, f)
 
         # Cache the original output directory
-        self.original_output_dir = writer.output_dir
+        self.original_output_dir = output_dir
 
         # Create a sample image for testing
         self.image_path = self.output_dir / "test_image.png"
         with open(self.image_path, "w") as f:
             f.write("dummy image data")
 
-        # Create a fresh document for each test
-        self.doc = styles.doc
+        # Use document from writer (via compat layer)
+        self.doc = writer.doc
 
     def tearDown(self):
         """Clean up after each test."""
-        # Restore the original output directory
-        writer.output_dir = self.original_output_dir
-
         # Clean up temp directory
         self.temp_dir.cleanup()
 
@@ -209,8 +209,8 @@ class TestDocxWriter(unittest.TestCase):
         self.assertIsInstance(styles.LINE_SPACING["single"], float)
         self.assertIsInstance(styles.LINE_SPACING["double"], float)
 
-        # Test style creation
-        style = styles.create_style("TestStyle")
+        # Test style creation - provide doc as first parameter
+        style = styles.create_style(styles.doc, "TestStyle")
         self.assertIsNotNone(style)
 
         # Test paragraph formatting

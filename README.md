@@ -34,6 +34,82 @@ A powerful Python library for creating professionally formatted Word documents f
     pip install python-docx
     ```
 
+## Project Structure
+
+DocxWriter has been restructured into a modular package for better maintainability and extensibility:
+
+```txt
+DocxWriter/
+├── docxwriter/              # Main package directory
+│   ├── __init__.py          # Package initialization
+│   ├── __main__.py          # Entry point for command-line usage
+│   ├── compat.py            # Compatibility layer for backward compatibility
+│   ├── document_creator.py  # Main document creation class
+│   ├── components/          # Document components
+│   │   ├── __init__.py
+│   │   └── styles.py        # Document styles
+│   └── utils/               # Utility modules
+│       ├── __init__.py
+│       ├── logger.py        # Logging utilities
+│       └── paths.py         # Path utilities
+├── writer.py                # Backward compatibility wrapper
+├── styles.py                # Backward compatibility wrapper
+├── tests.py                 # Test suite
+├── setup.py                 # Package setup script
+├── requirements.txt         # Dependencies
+├── examples/                # Example data files
+├── README.md                # This file
+└── CONTRIBUTING.md          # Contribution guidelines
+```
+
+## Usage Options
+
+DocxWriter can be used in several ways:
+
+1. **Direct script execution (backward compatible):**
+
+   ```python
+   python writer.py
+   ```
+
+2. **As a module:**
+
+   ```python
+   python -m docxwriter -i data.json -o output
+   ```
+
+3. **As a library in your code:**
+
+   ```python
+   from docxwriter.document_creator import DocumentCreator
+   
+   # Create a document creator
+   creator = DocumentCreator(output_dir="output")
+   
+   # Create a document from JSON file
+   creator.create_document_from_json("data.json")
+   ```
+
+## Command Line Options
+
+When used as a module, DocxWriter supports several command line options:
+
+```txt
+usage: python -m docxwriter [-h] [-i INPUT] [-o OUTPUT_DIR] [-w WATERMARK] [--no-watermark]
+
+Create Word documents from JSON data.
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -i INPUT, --input INPUT
+                        Input JSON file (default: data.json)
+  -o OUTPUT_DIR, --output-dir OUTPUT_DIR
+                        Output directory (default: data)
+  -w WATERMARK, --watermark WATERMARK
+                        Custom watermark text (default: predefined text)
+  --no-watermark        Disable watermark
+```
+
 ## Usage
 
 ### Basic Structure
