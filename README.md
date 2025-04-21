@@ -31,7 +31,7 @@ A powerful Python library for creating professionally formatted Word documents f
 3. Install dependencies:
 
     ```bash
-    pip install python-docx
+    pip install -r requirements.txt
     ```
 
 ## Project Structure
